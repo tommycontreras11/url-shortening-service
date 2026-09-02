@@ -17,7 +17,7 @@ export class ShortUrlEntity extends BaseEntity {
   @Column({ type: "varchar", length: 8, unique: true })
   shortCode: string;
 
-  @Column({ type: "int" })
+  @Column({ type: "int", default: 0 })
   accessCount: number
 
   @CreateDateColumn()
