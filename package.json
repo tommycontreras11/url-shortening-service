@@ -4,7 +4,7 @@
   "description": "A RESTful URL shortening service built with Node.js, Express, TypeScript, and PostgreSQL. Supports creating, retrieving, updating, and deleting short URLs, with randomly generated short codes and access statistics.",
   "main": "index.js",
   "scripts": {
-    "dev": "node src/index.js"
+    "dev": "tsx watch src/server.ts"
   },
   "keywords": [],
   "author": "Tommy Contreras",
@@ -13,5 +13,10 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
   }
 }
