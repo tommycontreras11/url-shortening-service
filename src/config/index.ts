@@ -4,7 +4,7 @@ dotenv.config({
   quiet: true,
 });
 
-const required = (name) => {
+const required = (name: string) => {
   const value = process.env[name];
 
   if (!value) throw new Error(`The env variable ${name} is required`);
