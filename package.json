@@ -4,7 +4,11 @@
   "description": "A RESTful URL shortening service built with Node.js, Express, TypeScript, and PostgreSQL. Supports creating, retrieving, updating, and deleting short URLs, with randomly generated short codes and access statistics.",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.ts"
+    "dev": "tsx watch src/server.ts",
+    "typeorm": "tsx ./node_modules/typeorm/cli.js -d ./src/database/data-source.ts",
+    "migration:generate": "npm run typeorm -- migration:generate",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert"
   },
   "keywords": [],
   "author": "Tommy Contreras",

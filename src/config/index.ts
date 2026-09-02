@@ -13,6 +13,7 @@ const required = (name: string) => {
 };
 
 export default {
+    NODE_ENV: required("NODE_ENV"),
     PORT: Number(required("PORT")),
 
     //DB Config
