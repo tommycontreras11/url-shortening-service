@@ -11,8 +11,11 @@ export const validateShortCodeSchema = z.object({
 })
 
 // Internal use
-export class CreateOrUpdateShortUrlInternal {
+export class CreateShortUrl {
     url: string
-    shortCode: string
-    accessCount?: number | null
+    shortCode?: string
+}
+
+export class UpdateShortUrl {
+    url: string
 }

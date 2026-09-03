@@ -2,53 +2,48 @@ import { StatusCode } from "../../helpers/status-code.js";
 import { formatShortUrlData } from "../../mapper/short-url.mapper.js";
 import { shortUrlRepository } from "../../repositories/short-url.repository.js";
 import { generateShortCode } from "../../utils/string.js";
-import { CreateOrUpdateShortUrl } from "./short-url.schema.js";
+import { CreateShortUrl, UpdateShortUrl } from "./short-url.schema.js";
 
 const getGeneratedCode = async () => {
-  let foundDifferentShortCode = false;
-  let foundShortCode: string | undefined = undefined;
+  while (true) {
+    const shortCode = generateShortCode();
 
-  do {
-    let shortCodeGenerated = generateShortCode();
-    foundShortCode =
-      (await shortUrlRepository.findByShortCode(shortCodeGenerated))?.shortCode;
+    const existingShortUrl =
+      await shortUrlRepository.findByShortCode(shortCode);
 
-    if (!foundShortCode) {
-        foundDifferentShortCode = true
-        foundShortCode = shortCodeGenerated
+    if (!existingShortUrl) {
+      return shortCode;
     }
-  } while (!foundDifferentShortCode);
-
-  return foundShortCode!
+  }
 };
 
 export const shortUrlService = {
   async getByShortCode(shortCode: string) {
-    const foundShortCode = await shortUrlRepository.findByShortCode(shortCode);
+    const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
-    if (!foundShortCode)
-      return Promise.reject({
+    if (!foundShortUrl)
+      throw {
         message: "URL not found, please provide a valid short code",
         status: StatusCode.NOT_FOUND,
-      });
+      };
 
-    foundShortCode.accessCount += 1;
-    await foundShortCode.save();
+    foundShortUrl.accessCount += 1;
+    await foundShortUrl.save();
 
-    return formatShortUrlData(foundShortCode);
+    return formatShortUrlData(foundShortUrl);
   },
   async getStatsByShortCode(shortCode: string) {
-    const foundShortCode = await shortUrlRepository.findByShortCode(shortCode);
+    const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
-    if (!foundShortCode)
-      return Promise.reject({
+    if (!foundShortUrl)
+      throw {
         message: "URL not found, please provide a valid short code",
         status: StatusCode.NOT_FOUND,
-      });
+      };
 
-    return formatShortUrlData(foundShortCode, true);
+    return formatShortUrlData(foundShortUrl, true);
   },
-  async create({ url }: CreateOrUpdateShortUrl) {
+  async create({ url }: CreateShortUrl) {
     const shortCodeGenerated = await getGeneratedCode()
 
     const shortUrlCreated = await shortUrlRepository.create({
@@ -58,30 +53,29 @@ export const shortUrlService = {
 
     return formatShortUrlData(shortUrlCreated);
   },
-  async update(shortCode: string, { url }: CreateOrUpdateShortUrl) {
-    const foundShortCode = await shortUrlRepository.findByShortCode(shortCode);
 
-    if (!foundShortCode)
-      return Promise.reject({
+  async update(shortCode: string, { url }: UpdateShortUrl) {
+    const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
+
+    if (!foundShortUrl)
+      throw {
         message: "URL not found, please provide a valid short code",
         status: StatusCode.NOT_FOUND,
-      });
+      };
     
-    const shortCodeGenerated = await getGeneratedCode()
+    const shortUrl = await shortUrlRepository.update(foundShortUrl, { url });
 
-    await shortUrlRepository.update(foundShortCode.id, { shortCode: shortCodeGenerated, url });
-      
-    return formatShortUrlData((await shortUrlRepository.findByShortCode(shortCodeGenerated))!);
+    return formatShortUrlData(shortUrl!);
   },
   async delete(shortCode: string) {
-    const foundShortCode = await shortUrlRepository.findByShortCode(shortCode);
+    const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
-    if (!foundShortCode)
-      return Promise.reject({
+    if (!foundShortUrl)
+      throw {
         message: "URL not found, please provide a valid short code",
         status: StatusCode.NOT_FOUND,
-      });
+      };
 
-    return await shortUrlRepository.remove(foundShortCode.id);
+    return await shortUrlRepository.remove(foundShortUrl.id);
   },
 };
