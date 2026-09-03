@@ -1,3 +1,4 @@
+import { HttpException } from "../../exceptions/http-exception.js";
 import { StatusCode } from "../../helpers/status-code.js";
 import { formatShortUrlData } from "../../mapper/short-url.mapper.js";
 import { shortUrlRepository } from "../../repositories/short-url.repository.js";
@@ -22,10 +23,10 @@ export const shortUrlService = {
     const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
     if (!foundShortUrl)
-      throw {
-        message: "URL not found, please provide a valid short code",
-        status: StatusCode.NOT_FOUND,
-      };
+      throw new HttpException(
+        "URL not found, please provide a valid short code",
+        StatusCode.NOT_FOUND,
+      )
 
     foundShortUrl.accessCount += 1;
     await foundShortUrl.save();
@@ -36,10 +37,10 @@ export const shortUrlService = {
     const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
     if (!foundShortUrl)
-      throw {
-        message: "URL not found, please provide a valid short code",
-        status: StatusCode.NOT_FOUND,
-      };
+      throw new HttpException(
+        "URL not found, please provide a valid short code",
+        StatusCode.NOT_FOUND,
+      )
 
     return formatShortUrlData(foundShortUrl, true);
   },
@@ -58,10 +59,10 @@ export const shortUrlService = {
     const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
     if (!foundShortUrl)
-      throw {
-        message: "URL not found, please provide a valid short code",
-        status: StatusCode.NOT_FOUND,
-      };
+      throw new HttpException(
+        "URL not found, please provide a valid short code",
+        StatusCode.NOT_FOUND,
+      );
     
     const shortUrl = await shortUrlRepository.update(foundShortUrl, { url });
 
@@ -71,10 +72,10 @@ export const shortUrlService = {
     const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
     if (!foundShortUrl)
-      throw {
-        message: "URL not found, please provide a valid short code",
-        status: StatusCode.NOT_FOUND,
-      };
+      throw new HttpException(
+        "URL not found, please provide a valid short code",
+        StatusCode.NOT_FOUND,
+      )
 
     return await shortUrlRepository.remove(foundShortUrl.id);
   },
