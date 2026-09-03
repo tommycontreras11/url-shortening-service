@@ -56,7 +56,6 @@ export const shortUrlService = {
   },
 
   async update(shortCode: string, url: string) {
-    console.log(url)
     const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
     if (!foundShortUrl)
