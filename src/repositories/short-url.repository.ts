@@ -5,9 +5,6 @@ import { CreateOrUpdateShortUrlInternal } from "../modules/short-url/short-url.s
 const repository = AppDataSource.getRepository(ShortUrlEntity);
 
 export const shortUrlRepository = {
-  findAll() {
-    return repository.find();
-  },
   findByShortCode(shortCode: string) {
     return repository.findOneBy({ shortCode });
   },
@@ -26,7 +23,7 @@ export const shortUrlRepository = {
       ...(payload.accessCount && { accessCount: payload.accessCount }),
     });
   },
-  delete(id: number) {
+  remove(id: number) {
     return repository.delete(id);
   },
 };

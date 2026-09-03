@@ -6,6 +6,10 @@ export const createOrUpdateShortUrlSchema = z.object({
 
 export type CreateOrUpdateShortUrl = z.infer<typeof createOrUpdateShortUrlSchema>
 
+export const validateShortCodeSchema = z.object({
+    shortCode: z.string({ error: "Please, provide a value" }).trim().min(1)
+})
+
 // Internal use
 export class CreateOrUpdateShortUrlInternal {
     url: string
