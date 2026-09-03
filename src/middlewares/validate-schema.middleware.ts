@@ -13,7 +13,7 @@ export const validateSchema = <T extends z.ZodType>(
     if (!result.success) {
       const errors = z.flattenError(result.error);
 
-      res.status(422).json({
+      res.status(400).json({
         message: "Validation failed",
         errors: {
           form: errors.formErrors,
