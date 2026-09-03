@@ -1,6 +1,6 @@
 import AppDataSource from "../database/data-source.js";
 import { ShortUrlEntity } from "../database/entities/short-url.entity.js";
-import { CreateShortUrl, UpdateShortUrl } from "../modules/short-url/short-url.schema.js";
+import { CreateShortUrl } from "../modules/short-url/short-url.schema.js";
 
 const repository = AppDataSource.getRepository(ShortUrlEntity);
 
@@ -15,8 +15,8 @@ export const shortUrlRepository = {
     });
     return entity.save();
   },
-  update(entity: ShortUrlEntity, payload: UpdateShortUrl) {
-    entity.url = payload.url
+  update(entity: ShortUrlEntity, url: string) {
+    entity.url = url
 
     return entity.save()
   },

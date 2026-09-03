@@ -30,7 +30,7 @@ export const createShortUrlController = async (req: Request, res: Response) => {
 export const updateShortUrlController = async (req: Request, res: Response) => {
   const { shortCode } = req.params as { shortCode: string };
 
-  const data = await shortUrlService.update(shortCode, req.body);
+  const data = await shortUrlService.update(shortCode, req.body.url);
   return res.status(StatusCode.OK).json({ data });
 };
 

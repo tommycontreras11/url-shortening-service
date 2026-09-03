@@ -3,7 +3,7 @@ import { StatusCode } from "../../helpers/status-code.js";
 import { formatShortUrlData } from "../../mapper/short-url.mapper.js";
 import { shortUrlRepository } from "../../repositories/short-url.repository.js";
 import { generateShortCode } from "../../utils/string.js";
-import { CreateShortUrl, UpdateShortUrl } from "./short-url.schema.js";
+import { CreateShortUrl } from "./short-url.schema.js";
 
 const getGeneratedCode = async () => {
   while (true) {
@@ -55,7 +55,8 @@ export const shortUrlService = {
     return formatShortUrlData(shortUrlCreated);
   },
 
-  async update(shortCode: string, { url }: UpdateShortUrl) {
+  async update(shortCode: string, url: string) {
+    console.log(url)
     const foundShortUrl = await shortUrlRepository.findByShortCode(shortCode);
 
     if (!foundShortUrl)
@@ -64,7 +65,7 @@ export const shortUrlService = {
         StatusCode.NOT_FOUND,
       );
     
-    const shortUrl = await shortUrlRepository.update(foundShortUrl, { url });
+    const shortUrl = await shortUrlRepository.update(foundShortUrl, url);
 
     return formatShortUrlData(shortUrl!);
   },

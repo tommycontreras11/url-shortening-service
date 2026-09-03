@@ -15,7 +15,3 @@ export class CreateShortUrl {
     url: string
     shortCode?: string
 }
-
-export class UpdateShortUrl {
-    url: string
-}
