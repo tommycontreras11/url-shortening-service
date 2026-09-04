@@ -1,21 +1,17 @@
-"use client"
-
-import { useGetShortUrlByShortCode } from "@/hooks/api/short-url.hook";
-
 export default function Home() {
-  const { data: shortUrl, isLoading, isPending, error } = useGetShortUrlByShortCode("dIkE0zNR")
-
-  if(isLoading) return (
-    <p>Fetching short url...</p>
-  )
-
-  if(isPending) return (
-    <p>Fetching short url is in pending...</p>
-  )
-
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans">
-      {shortUrl && shortUrl.data.url}
-    </div>
+    <main className="flex min-h-screen items-center justify-center bg-muted/40 px-4">
+      <div className="w-full max-w-2xl">
+        <div className="mb-6 text-center">
+          <h1 className="text-3xl font-bold tracking-tight">
+            Welcome to Short URL Service
+          </h1>
+
+          <p className="mt-2 text-muted-foreground">
+            Turn long URLs into short, shareable links.
+          </p>
+        </div>
+      </div>
+    </main>
   );
 }

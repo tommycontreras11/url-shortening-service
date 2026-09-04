@@ -14,6 +14,7 @@ export function UpdateShortUrlForm({ shortCode }: { shortCode: string }) {
     mutate({ shortCode, url });
   }
 
+  const apiError = error instanceof ApiError ? error : undefined;
   const urlErrors =
     error instanceof ApiError ? error.data?.errors?.fields?.url : undefined;
 
@@ -70,7 +71,7 @@ export function UpdateShortUrlForm({ shortCode }: { shortCode: string }) {
 
       {isError && !urlErrors?.length && (
         <div className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-          Something went wrong. Please try again.
+          {apiError?.message ?? "Something went wrong. Please try again."}
         </div>
       )}
     </form>
