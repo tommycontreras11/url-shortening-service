@@ -24,7 +24,7 @@ export const shortUrlService = {
 
     if (!foundShortUrl)
       throw new HttpException(
-        "URL not found, please provide a valid short code",
+        "Short code not found, please provide a valid one",
         StatusCode.NOT_FOUND,
       )
 
@@ -38,7 +38,7 @@ export const shortUrlService = {
 
     if (!foundShortUrl)
       throw new HttpException(
-        "URL not found, please provide a valid short code",
+        "Short code not found, please provide a valid one",
         StatusCode.NOT_FOUND,
       )
 
@@ -60,7 +60,7 @@ export const shortUrlService = {
 
     if (!foundShortUrl)
       throw new HttpException(
-        "URL not found, please provide a valid short code",
+        "Short code not found, please provide a valid one",
         StatusCode.NOT_FOUND,
       );
     
@@ -73,7 +73,7 @@ export const shortUrlService = {
 
     if (!foundShortUrl)
       throw new HttpException(
-        "URL not found, please provide a valid short code",
+        "Short code not found, please provide a valid one",
         StatusCode.NOT_FOUND,
       )
 
