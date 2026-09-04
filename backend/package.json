@@ -1,5 +1,5 @@
 {
-  "name": "url-shortening-service",
+  "name": "url-shortening-service-backend",
   "version": "1.0.0",
   "description": "A RESTful URL shortening service built with Node.js, Express, TypeScript, and PostgreSQL. Supports creating, retrieving, updating, and deleting short URLs, with randomly generated short codes and access statistics.",
   "main": "index.js",
